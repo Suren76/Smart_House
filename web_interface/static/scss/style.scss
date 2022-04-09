@@ -1,0 +1,24 @@
+@import "vars";
+
+.sensors-list , #daily,  #weekly {
+  background: $header_color;
+  border-radius: 3px
+
+}
+
+.sensor-block {
+  background: $footer_color;
+  border-radius: 5px;
+
+  a.btn{
+    &:hover {
+        border-color: var(--bs-blue);
+  }
+
+  }
+}
+
+#daily, #weekly{
+  border-radius: 15px;
+  border-color: var(--bs-blue);
+}

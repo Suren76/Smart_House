@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block main %}
+<main class="pt-3">
+    <div class="container sensors-list p-3 text-center">
+      <div class="row">
+        <div class="my-2 col-6 col-sm-6 col-md-4 ">
+          <div class="sensor-block">
+            <h5>Temperature</h5>
+            <div class="sensor-data">
+               {{sensors_data[0][0]}}
+            </div>
+            <a href="/temperature" class="btn sensor-data-btn">more</a>
+          </div>
+        </div>
+        <div class="my-2 col-6 col-sm-6 col-md-4">
+          <div class="sensor-block">
+            <h5>Humidity</h5>
+            <div class="sensor-data">
+              {{sensors_data[1][0]}}
+            </div>
+            <a href="/humidity" class="btn sensor-data-btn">more</a>
+          </div>
+        </div>
+        <!-- <div class="my-2 col-6 col-sm-6 col-md-4">
+          <div class="sensor-block">
+            <h5>Light</h5>
+            <div class="sensor-data">
+              {% block light %} {% endblock %}
+            </div>
+            <a href="" class="btn sensor-data-btn">more</a>
+          </div>
+        </div> -->
+        <div class="my-2 col-6 col-sm-6 col-md-4">
+          <div class="sensor-block">
+            <h5>Relay</h5>
+            <div class="sensor-data">
+              {{sensors_data[2][0]}}
+            </div>
+            <a href="/relay" class="btn sensor-data-btn">more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+{% endblock %}

@@ -1,0 +1,17 @@
+.sensors-list, #daily, #weekly {
+  background: #F8F9FA;
+  border-radius: 3px;
+}
+
+.sensor-block {
+  background: #D8D8D8;
+  border-radius: 5px;
+}
+.sensor-block a.btn:hover {
+  border-color: var(--bs-blue);
+}
+
+#daily, #weekly {
+  border-radius: 15px;
+  border-color: var(--bs-blue);
+}

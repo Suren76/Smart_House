@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} {% endblock %}
+
+{% block main %}
+<main class="pt-3">
+    <div class="container sensors-list p-3 text-center" style="max-height:600px">
+      <div class="row">
+
+          <div class="g-0 col-12 col-sm-6 col-md-6 col-lg-6 p-5 my-2" id="main" >
+              <div class="sensor-block mb-5 py-2">
+                <h2>{% block sensor_name %} {% endblock %}</h2>
+                <div class="sensor-data">
+                  {% block sensor_main %} {% endblock %}
+                </div>
+              </div>
+              <div class="row p-5 my-2 border border-2 border-primary" id="weekly">
+                <h2>Weekly</h2>
+                {% block weekly %} {% endblock %}
+              </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-5 my-2 border border-2 border-primary" id="daily" >
+              <div class="row">
+                <h2>Daily</h2>
+                {% block daily %} {% endblock %}
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </main>
+{% endblock %}

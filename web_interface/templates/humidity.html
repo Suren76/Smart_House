@@ -1,0 +1,22 @@
+{% extends "base_sensor_data.html" %}
+
+{% block title %} Humidity data {% endblock %}
+
+{% block sensor_name %} Humidity {% endblock %}
+
+{% block sensor_main %} {{humidity[0]}} {% endblock %}
+
+
+
+{% block daily %}
+  {% for item in humidity[1] %}
+    <div class="col-12">{{ item }}</div>
+  {% endfor %}
+{% endblock %}
+
+
+{% block weekly %}
+  {% for item in humidity[2] %}
+    <div class="col-12">{{ item }}</div>
+  {% endfor %}
+{% endblock %}

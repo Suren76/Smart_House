@@ -1,0 +1,26 @@
+{% extends "base_sensor_data.html" %}
+
+{% block title %} Relay data {% endblock %}
+
+{% block sensor_name %} Relay {% endblock %}
+
+{% block sensor_main %}
+{{relay[0]}} <br>
+<a href="/relay/on" class="btn btn-outline-success">On</a>
+<a href="/relay/off" class="btn btn-outline-primary">Off</a>
+{% endblock %}
+
+
+
+{% block daily %}
+  {% for item in relay[1] %}
+    <div class="col-12">{{ item }}</div>
+  {% endfor %}
+{% endblock %}
+
+
+{% block weekly %}
+  {% for item in relay[2] %}
+    <div class="col-12">{{ item }}</div>
+  {% endfor %}
+{% endblock %}
