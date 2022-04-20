@@ -26,24 +26,32 @@ def face_unlock():
 
         face_location = face_recognition.face_locations(img)
 
-        # print(results)
+        # print(face_location)
 
         if len(face_location) == 0:
             time.sleep(1)
             continue
 
         img_encodings = face_recognition.face_encodings(img)[0]
+        # print(img_encodings)
 
         for encoding_file in users_encodings:
             data = pickle.loads(open(encoding_file, "rb").read())
             # print(data["encodings"])
             result = face_recognition.compare_faces(data["encodings"], img_encodings)
+            print(result)
+            result_counted = {"True": len([bool_value for bool_value in result if bool_value]) , "False": len([bool_value for bool_value in result if not bool_value])}
 
-            if True in set(result):
+            if result_counted["True"] >= result_counted["False"]:
                 return {"name": data["name"], "unlock": True}
             else:
-                cv2.imwrite(img, f"unknown_people_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}")
-                send_me(f"unknown_people_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}")
+                if not os.path.exists("dataset/unknown"):
+                    os.mkdir("dataset/unknown")
+                # print(0)
+                cv2.imwrite(f"dataset/unknown/unknown_people_{str(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))}.jpg", img)
+                # print(1)
+                send_me(f"dataset/unknown/unknown_people_{str(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))}.jpg")
+                # print(2)
                 return {"name": "unknown", "unlock": False}
 
         # for (top, right, bottom, left) in face_location:

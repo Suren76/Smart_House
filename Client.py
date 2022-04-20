@@ -9,8 +9,7 @@ class Client:
         self.client.connect((address, port))
 
     def data(self):
-        data = self.client.recv(1024)
-        return data.decode("utf-8")
+        return self.client.recv(1024).decode("utf-8")
 
     def send(self, message):
         message = message.encode("utf-8")

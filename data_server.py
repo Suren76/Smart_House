@@ -3,17 +3,21 @@ import os
 from gpiozero import Button
 import keyboard
 
-button_connection_end = Button(17)
-button_data_server = Button(27)
-server = Server("localhost", 1212)
 
+# button_connection_end = Button(17)
+# button_data_server = Button(27)
+print("socket server 0")
+server = Server("127.0.0.9", 1212)
+print("socket server 1")
 
+print("mode_connection 0")
 # server.mode_connection(button_connection_end.is_pressed)
 server.mode_connection(keyboard.is_pressed("q"))
+print("mode_connection 1")
 
 # button_data_server.wait_for_press()
 keyboard.wait("s")
-os.system(f"sudo python app.py {server}")
+# os.system(f"sudo python app.py {server}")
 server.mode_data()
 
 while True:

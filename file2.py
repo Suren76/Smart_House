@@ -1,4 +1,12 @@
-import sys
-print(sys.argv[0]) # prints python_script.py
-print(sys.argv[1]) # prints var1
-print(sys.argv[2]) # prints var2
+import Server
+import os
+
+server = Server.Server("127.0.0.11", 9999)
+server.name = "server1"
+
+os.system(f"export SERVER={server}")
+
+
+while input() != "quit":
+    print(1)
+    server.name = input()
