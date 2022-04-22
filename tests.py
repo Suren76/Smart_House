@@ -1,7 +1,4 @@
-import Server
-import web_interface.app as app
+import send_to_telegram as t
 
-# server = Server.Server("localhost", 1212)
-# app.flask_server(server)
-
-
+print(t.send_me())
+# print(t.wait_answer())

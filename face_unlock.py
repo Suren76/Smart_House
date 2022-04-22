@@ -6,13 +6,12 @@ import sys
 import pickle
 import datetime
 
-import send_to_telegram
 from send_to_telegram import *
 
 
 def face_unlock():
     users = os.listdir("dataset")
-    users_encodings = [f"dataset/{username}/encodings/{sorted(os.listdir(f'dataset/{username}/encodings/'))[-1]}" for username in users]
+    users_encodings = [f"dataset/{username}/encodings/{sorted(os.listdir(f'dataset/{username}/encodings/'))[-1]}" for username in users if username != "unknown"]
     print(users_encodings)
     cap = cv2.VideoCapture(0)
 
@@ -147,7 +146,9 @@ def face_model(_name: str, model_data_type, video_path=None):
         __model_by_video(name=_name, video=video_path)
         __model_by_photos(_name)
 
-print(1)
-print(face_unlock())
-print( "end")
-print(2)
+
+if __name__ == "__main__":
+    print(1)
+    print(face_unlock())
+    print("end")
+    print(2)

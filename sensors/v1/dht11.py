@@ -33,6 +33,6 @@ time.sleep(10)
 
 while True:
     sensor.measure()
-    client.send({"sensor": "dht", "address": address, "time": datetime.datetime.now(), "humidity": sensor.humidity(), "temperature": sensor.temperature()})
+    client.send({"sensor": "dht", "name": name, "time": datetime.datetime.now(), "humidity": sensor.humidity(), "temperature": sensor.temperature()})
     time.sleep(60)
 

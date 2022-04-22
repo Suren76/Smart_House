@@ -7,13 +7,13 @@ import door_unlock
 import keyboard
 
 
-button = Button(24)
+# button = Button(24)
 
-os.system("sudo python data_server.py &")
+# os.system("sudo python data_server.py &")
 # os.system("sudo python nfc_unlock.py &")
 
 while True:
-    if keyboard.is_pressed("f"): # button.is_pressed for raspberry btn
+    if keyboard.is_pressed("f") == True: # button.is_pressed for raspberry btn
         time.sleep(1)
         result = face_unlock.face_unlock()
         if True == result["unlock"]:
