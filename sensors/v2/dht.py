@@ -2,7 +2,7 @@
 import dht
 
 
-sensor = dht.DHT11(machine.Pin(4))
+
 
 def web_page():
     sensor.measure()
@@ -32,7 +32,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('', 80))
 s.listen(5)
 
-if run_mode = "main":
+if run_mode == "main":
     while True:
         try:
             if gc.mem_free() < 102000:
@@ -44,7 +44,7 @@ if run_mode = "main":
             conn.settimeout(None)
             request = str(request)
             print('Content = %s' % request)
-            response = json.dumps("sensor": "dht", "address": address, "time": datetime.datetime.now(), "humidity": sensor.humidity(), "temperature": sensor.temperature())
+            response = json.dumps({"sensor": "dht", "name":name, "time": time.localtime(), "humidity": sensor.humidity(), "temperature": sensor.temperature()})
             conn.send('HTTP/1.1 200 OK\n')
             conn.send('Content-Type: text/html\n')
             conn.send('Connection: close\n\n')
@@ -54,7 +54,7 @@ if run_mode = "main":
             conn.close()
             print('Connection closed')
 
-if run_mode = "reserve":
+if run_mode == "reserve":
     while True:
         try:
             if gc.mem_free() < 102000:

@@ -1,23 +1,20 @@
 from flask import Flask, render_template, url_for
+from flask_sqlalchemy import SQLAlchemy
 import random
 import os
 import sys
+import requests
+import face_unlock
 
-print(1)
-# server = sys.argv[1]
-
-print(2)
-
-server = None
-
-# def servers(server_obj):
-#     global server
-#     server = server_obj
-#
-# servers()
+ip = "192.168.1.101"
 
 print(3)
 app = Flask(__name__)
+# app.config["SQLALCHEMY_DATABASE_URL"] = 'sqlite://database.db'
+# db = SQLAlchemy(app)
+#
+# class Dht():
+#     pass
 
 # temperature = open("sensors_data/dht/temperature.json", "a").read()
 # humidity = open("sensors_data/dht/humidity.json", "a").read()
@@ -28,17 +25,17 @@ print(4)
 @app.route("/home")
 def index():
     if os.path.exists("sensors_data/dht/temperature.json"):
-        latest_temperature = [open("sensors_data/dht/temperature.json", "r+").read()][-1]
+        latest_temperature = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/temperature.json", "r+").read()][-1]
     else:
         latest_temperature = ["no data"]
 
     if os.path.exists("sensors_data/dht/humidity.json"):
-        latest_humidity = [open("sensors_data/dht/humidity.json", "r+").read()][-1]
+        latest_humidity = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/humidity.json", "r+").read()][-1]
     else:
         latest_humidity = ["no data"]
 
     if os.path.exists("sensors_data/dht/relay.json"):
-        latest_relay = [open("sensors_data/relay/relay.json", "r+").read()][-1]
+        latest_relay = [open(f"sensors_data/relay/{os.listdir('sensors_data/relay/')[0]}/relay.json", "r+").read()][-1]
     else:
         latest_relay = ["no data"]
 
@@ -55,9 +52,9 @@ print(6)
 @app.route("/temperature")
 def temperature():
     if os.path.exists("sensors_data/dht/temperature.json"):
-        temperature_sensor_main = [open("sensors_data/dht/temperature.json", "r+").read()][-1]
-        temperature_daily = [open("sensors_data/dht/temperature.json", "r+").read()]
-        temperature_weekly = [open("sensors_data/dht/temperature.json", "r+").read()]
+        temperature_sensor_main = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/temperature.json", "r+").read()][-1]
+        temperature_daily = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/temperature_hour.json", "r+").read()]
+        temperature_weekly = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/temperature_day.json", "r+").read()]
     else:
         temperature_sensor_main = ["no data"][0]
         temperature_daily = ["no data", "no data", "no data", "no data", "no data", "no data", "no data", "no data",
@@ -72,9 +69,9 @@ print(7)
 @app.route("/humidity")
 def humidity():
     if os.path.exists("sensors_data/dht/humidity.json"):
-        humidity_sensor_main = [open("sensors_data/dht/humidity.json", "r+").read()][-1]
-        humidity_daily = [open("sensors_data/dht/humidity.json", "r+").read()]
-        humidity_weekly = [open("sensors_data/dht/humidity.json", "r+").read()]
+        humidity_sensor_main = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/humidity.json", "r+").read()][-1]
+        humidity_daily = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/humidity_hour.json", "r+").read()]
+        humidity_weekly = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/humidity_day.json", "r+").read()]
     else:
         humidity_sensor_main = ["no data"][0]
         humidity_daily = ["no data"]
@@ -87,9 +84,9 @@ print(8)
 @app.route("/relay/")
 def relay():
     if os.path.exists("sensors_data/relay/relay.json"):
-        relay_sensor_main = [open("sensors_data/relay/relay.json", "r+").read()][-1]
-        relay_daily = [open("sensors_data/relay/relay.json", "r+").read()]
-        relay_weekly = [open("sensors_data/relay/relay.json", "r+").read()]
+        relay_sensor_main = [open(f"sensors_data/relay/{os.listdir('sensors_data/relay/')[0]}/relay.json", "r+").read()][-1]
+        relay_daily = [open(f"sensors_data/relay/{os.listdir('sensors_data/relay/')[0]}/relay_hour.json", "r+").read()]
+        relay_weekly = [open(f"sensors_data/relay/{os.listdir('sensors_data/relay/')[0]}/relay_day.json", "r+").read()]
     else:
         relay_sensor_main = ["no data"][0]
         relay_daily = ["no data"]
@@ -101,24 +98,20 @@ def relay():
 print(9)
 @app.route("/relay/<string:command>")
 def relay_cmd(command):
-    if command == "on":
-        print("on")
-        return server.name
-        # for i in server().address_list:
-        #     i.send("on")
-    if command == "off":
-        print("off")
-        return command
-        # for i in server().address_list:
-        #     i.send("off")
-    if command == "random":
-        command = str(str(random.randint(0, 9)) * 33 + " ") * 5
-        return str(str(str(command + "\n") * 15) + "\n") * 555
+    requests.get(ip+f"/?relay={command}")
+    print(command)
 
 
 print(10)
 @app.route("/settings")
 def settings():
+    return render_template("settings.html")
+
+@app.route("/settings/<string:command>/<string:file_location>/<string:name>")
+def settings_set(command, file_location, name):
+    if command == "face_model_registration":
+        pass
+        face_unlock.face_model(name, model_data_type="video", video_path=file_location)
     return render_template("settings.html")
 
 
@@ -137,6 +130,5 @@ def about():
 # def name(n):
 #     return n
 
-print(server, 1)
-app.run(debug=True, host="0.0.0.0", port=9090)
-print(server, 2)
+app.run(debug=True, host="0.0.0.0", port=80)
+
