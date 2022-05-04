@@ -6,7 +6,8 @@ import sys
 import requests
 import face_unlock
 
-ip = "192.168.1.101"
+
+ip = "10.42.0.136"
 
 print(3)
 app = Flask(__name__)

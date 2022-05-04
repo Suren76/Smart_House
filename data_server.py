@@ -2,11 +2,11 @@ import time
 
 from Server import *
 import os
-from gpiozero import Button
+# from gpiozero import Button
 import keyboard
 import requests
 
-ip = "192.168.1.101"
+ip = "http://10.42.0.136"
 
 
 # button_connection_end = Button(17)
@@ -31,6 +31,8 @@ time.sleep(60*3)
 
 for_hour = 0
 for_day = 0
+
+os.system(f"sudo python3 app.py")
 
 while True:
     response = requests.get(ip)
