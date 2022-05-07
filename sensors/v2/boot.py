@@ -20,8 +20,16 @@ run_mode = "main"
 wifi_networks = {"main":
                      ['Raspberry', '3.141592'],
                  "reserve":
-                     ['BALCONY', '273824ha']
+                     ['TeAm', '28500801']
                  }
+
+
+def nodemcu_name():
+    url_get_value = request.split()[1].split("/")
+    if url_get_value[0] == '' and url_get_value[1] == "name" and url_get_value[2][:7] == "nodemcu":
+        with  open("config.json", "w+") as file:
+            file.write(json.dumps({'name': str(url_get_value[2])}))
+        global name = str(url_get_value[2])
 
 
 def do_connect(ssid, password):
@@ -75,7 +83,8 @@ if not "config.json" in os.listdir():
     name = str('nodemcu' + ip)
 
 led = machine.Pin(2, machine.Pin.OUT)
-sensor = dht.DHT11(machine.Pin(5))
+# sensor = dht.DHT11(machine.Pin(5))
+# sensor = dht.DHT22(machine.Pin(5))
 relay = machine.Pin(4, machine.Pin.OUT)
 
 print(run_mode, name)

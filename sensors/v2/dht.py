@@ -1,6 +1,6 @@
 # Complete project details at https://RandomNerdTutorials.com
 import dht
-
+import socket
 
 
 
@@ -43,8 +43,14 @@ if run_mode == "main":
             request = conn.recv(1024)
             conn.settimeout(None)
             request = str(request)
+            
+            nodemcu_name()
+            
             print('Content = %s' % request)
-            response = json.dumps({"sensor": "dht", "name":name, "time": time.localtime(), "humidity": sensor.humidity(), "temperature": sensor.temperature()})
+            local_time = time.localtime()
+            time_now = str(local_time[0])+"."+str(local_time[1])+"."+str(local_time[2])+" "+str(local_time[3])+":"+str(local_time[4])+":"+str(local_time[5])
+            sensor.measure()
+            response = json.dumps({"sensor": "dht", "name":name, "time": time_now, "humidity": sensor.humidity(), "temperature": sensor.temperature()})
             conn.send('HTTP/1.1 200 OK\n')
             conn.send('Content-Type: text/html\n')
             conn.send('Connection: close\n\n')
@@ -65,6 +71,9 @@ if run_mode == "reserve":
             request = conn.recv(1024)
             conn.settimeout(None)
             request = str(request)
+            
+            nodemcu_name()
+            
             print('Content = %s' % request)
             response = web_page()
             conn.send('HTTP/1.1 200 OK\n')

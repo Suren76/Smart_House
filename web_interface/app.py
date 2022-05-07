@@ -5,8 +5,9 @@ import os
 import sys
 import requests
 import face_unlock
+import json
 
-ip = "192.168.1.101"
+ip = "192.168.43.140"
 
 print(3)
 app = Flask(__name__)
@@ -24,18 +25,22 @@ print(4)
 @app.route("/")
 @app.route("/home")
 def index():
-    if os.path.exists("sensors_data/dht/temperature.json"):
-        latest_temperature = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/temperature.json", "r+").read()][-1]
+    if os.path.exists("../sensors_data/dht/"):
+        latest_temperature = json.loads(open(f"../sensors_data/dht/{os.listdir('../sensors_data/dht/')[0]}/temperature.json", "r+").read())
     else:
         latest_temperature = ["no data"]
 
-    if os.path.exists("sensors_data/dht/humidity.json"):
-        latest_humidity = [open(f"sensors_data/dht/{os.listdir('sensors_data/dht/')[0]}/humidity.json", "r+").read()][-1]
+    if os.path.exists("../sensors_data/dht/"):
+        latest_humidity = json.loads(open(f"../sensors_data/dht/{os.listdir('../sensors_data/dht/')[0]}/humidity.json", "r+").read())
+        # [open(f"../sensors_data/dht/{os.listdir('../sensors_data/dht/')[0]}/humidity.json", "r+").read()][-1][0]
+
     else:
         latest_humidity = ["no data"]
 
-    if os.path.exists("sensors_data/dht/relay.json"):
-        latest_relay = [open(f"sensors_data/relay/{os.listdir('sensors_data/relay/')[0]}/relay.json", "r+").read()][-1]
+    if os.path.exists("../sensors_data/dht/"):
+        latest_relay = json.loads(open(f"../sensors_data/relay/{os.listdir('../sensors_data/relay/')[0]}/relay.json", "r+").read())
+        print(latest_relay, type(latest_relay))
+        # [open(f"../sensors_data/relay/{os.listdir('../sensors_data/relay/')[0]}/relay.json", "r+").read()][-1][0]
     else:
         latest_relay = ["no data"]
 

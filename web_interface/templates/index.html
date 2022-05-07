@@ -10,7 +10,8 @@
           <div class="sensor-block">
             <h5>Temperature</h5>
             <div class="sensor-data">
-               {{sensors_data[0][0]}}
+               {{sensors_data[0]['time']}}  <br>
+               {{sensors_data[0]['temperature']}}
             </div>
             <a href="/temperature" class="btn sensor-data-btn">more</a>
           </div>
@@ -19,7 +20,8 @@
           <div class="sensor-block">
             <h5>Humidity</h5>
             <div class="sensor-data">
-              {{sensors_data[1][0]}}
+              {{sensors_data[1]['time']}}  <br>
+              {{sensors_data[1]['humidity']}}
             </div>
             <a href="/humidity" class="btn sensor-data-btn">more</a>
           </div>
@@ -37,7 +39,8 @@
           <div class="sensor-block">
             <h5>Relay</h5>
             <div class="sensor-data">
-              {{sensors_data[2][0]}}
+              {{sensors_data[2]['time']}}  <br>
+              {{sensors_data[2]['relay']}}
             </div>
             <a href="/relay" class="btn sensor-data-btn">more</a>
           </div>
